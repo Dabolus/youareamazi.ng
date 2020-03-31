@@ -6,6 +6,7 @@ import send from 'koa-send';
 import webpack from 'webpack';
 import webpackConfigs from '../../webpack.config';
 import { Middleware } from 'koa';
+import health from './health';
 import decode from '../helpers/decode';
 
 const configureDevMiddlewares = async () => {
@@ -49,6 +50,7 @@ const configureDevMiddlewares = async () => {
   };
 
   return [
+    health(),
     homeMiddleware,
     motivationMiddleware,
     nameMiddleware,

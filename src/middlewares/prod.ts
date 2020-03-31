@@ -6,6 +6,7 @@ import send from 'koa-send';
 import webpack from 'webpack';
 import webpackConfigs from '../../webpack.config';
 import { Middleware } from 'koa';
+import health from './health';
 import decode from '../helpers/decode';
 
 const configureProdMiddlewares = async (hostname: string) => {
@@ -36,7 +37,7 @@ const configureProdMiddlewares = async (hostname: string) => {
     };
   };
 
-  return [...webpackMiddlewares, nameMiddleware];
+  return [health(), ...webpackMiddlewares, nameMiddleware];
 };
 
 export default configureProdMiddlewares;
