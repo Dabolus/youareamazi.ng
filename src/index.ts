@@ -1,25 +1,32 @@
 #!/usr/bin/env node
 
+import path from 'path';
 import Koa from 'koa';
-import koaWebpack from 'koa-webpack';
-import webpack from 'webpack';
-import webpackConfigs from '../webpack.config';
+import ejs from 'koa-ejs';
+import configureProdMiddlewares from './middlewares/prod';
+import configureDevMiddlewares from './middlewares/dev';
+
+const hostname = 'youareamazi.ng';
 
 const start = () =>
   new Promise(async (resolve, reject) => {
     const port = process.env.PORT || 4416;
     const app = new Koa();
 
-    const middlewares = await Promise.all(
-      webpackConfigs.map(webpackConfig =>
-        koaWebpack({ compiler: webpack(webpackConfig) }),
-      ),
-    );
+    ejs(app, {
+      root: path.join(__dirname, 'apps/motivation'),
+      layout: false,
+      debug: true,
+      async: true,
+      viewExt: 'ejs',
+    });
+
+    const middlewares =
+      process.env.NODE_ENV === 'production'
+        ? await configureProdMiddlewares(hostname)
+        : await configureDevMiddlewares();
 
     middlewares.forEach(middleware => app.use(middleware));
-    app.use(async ctx => {
-      ctx.body = 'Hello, World!';
-    });
 
     app
       .listen(port)

@@ -10,16 +10,22 @@
     "build": "cross-env NODE_ENV=production webpack"
   },
   "dependencies": {
-    "koa": "^2.11.0"
+    "koa": "^2.11.0",
+    "koa-ejs": "^4.3.0",
+    "koa-send": "^5.0.0",
+    "punycode": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/copy-webpack-plugin": "^5.0.0",
     "@types/koa": "^2.11.3",
+    "@types/koa-ejs": "^4.2.2",
+    "@types/koa-send": "^4.1.2",
     "@types/koa-webpack": "^5.0.1",
     "@types/mini-css-extract-plugin": "^0.9.1",
     "@types/node": "^13.9.5",
     "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
+    "@types/punycode": "^2.1.0",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.9",
     "babel-loader": "^8.1.0",
