@@ -1,12 +1,45 @@
 {
   "name": "youareamazi.ng",
   "version": "0.1.0",
+  "type": "module",
   "repository": "git@github.com:Dabolus/youareamazi.ng.git",
   "author": "Giorgio Garasto <giorgio@garasto.it>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+  "dependencies": {
+    "koa": "^2.11.0"
+  },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@types/copy-webpack-plugin": "^5.0.0",
+    "@types/koa": "^2.11.3",
+    "@types/koa-webpack": "^5.0.1",
+    "@types/mini-css-extract-plugin": "^0.9.1",
     "@types/node": "^13.9.5",
-    "typescript": "^3.8.3"
+    "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
+    "@types/terser-webpack-plugin": "^2.2.0",
+    "@types/webpack": "^4.41.9",
+    "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.4.2",
+    "cssnano": "^4.1.10",
+    "cssnano-preset-advanced": "^4.0.7",
+    "html-webpack-plugin": "^4.0.0-beta.14",
+    "koa-webpack": "^5.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "sass-loader": "^8.0.2",
+    "terser-webpack-plugin": "^2.3.5",
+    "ts-node": "^8.8.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
