@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import path from 'path';
 import Koa from 'koa';
-import ejs from 'koa-ejs';
+import ejs from './middlewares/ejs';
 import configureProdMiddlewares from './middlewares/prod';
 import configureDevMiddlewares from './middlewares/dev';
 
@@ -13,13 +12,7 @@ const start = () =>
     const port = process.env.PORT || 4416;
     const app = new Koa();
 
-    ejs(app, {
-      root: path.join(__dirname, 'apps/motivation'),
-      layout: false,
-      debug: true,
-      async: true,
-      viewExt: 'ejs',
-    });
+    ejs(app);
 
     const middlewares =
       process.env.NODE_ENV === 'production'
