@@ -1,7 +1,7 @@
 import path from 'path';
 import koaWebpack from 'koa-webpack';
 import webpack, { Compiler } from 'webpack';
-import webpackConfigs from '../../webpack.config';
+import webpackConfigs from '../../webpack.config.apps';
 import { Middleware } from 'koa';
 import health from './health';
 import decode from '../helpers/decode';

@@ -13,7 +13,7 @@ const createWebpackConfig = (
   templated: boolean,
 ): Configuration => {
   const baseSrcPath = path.resolve(__dirname, 'src/apps', app);
-  const baseDistPath = path.resolve(__dirname, 'dist/apps', app);
+  const baseLibPath = path.resolve(__dirname, 'lib/apps', app);
 
   return {
     mode: isDev ? 'development' : 'production',
@@ -24,7 +24,7 @@ const createWebpackConfig = (
     },
     output: {
       filename: 'main.js',
-      path: baseDistPath,
+      path: baseLibPath,
       pathinfo: false,
       publicPath: `/${app}`,
     },
@@ -47,9 +47,7 @@ const createWebpackConfig = (
             new OptimizeCssAssetsPlugin(),
           ],
         },
-    ...(isDev && {
-      devtool: 'eval-source-map',
-    }),
+    devtool: isDev ? 'eval-source-map' : 'source-map',
     module: {
       rules: [
         {
@@ -142,7 +140,7 @@ const createWebpackConfig = (
       new CopyPlugin([
         {
           from: path.resolve(baseSrcPath, 'assets'),
-          to: baseDistPath,
+          to: baseLibPath,
         },
       ]),
     ],

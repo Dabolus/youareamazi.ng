@@ -1,21 +1,9 @@
-import path from 'path';
-import Koa from 'koa';
-import koaWebpack from 'koa-webpack';
-import ejs from 'koa-ejs';
 import send from 'koa-send';
-import webpack from 'webpack';
-import webpackConfigs from '../../webpack.config';
 import { Middleware } from 'koa';
 import health from './health';
 import decode from '../helpers/decode';
 
 const configureProdMiddlewares = async (hostname: string) => {
-  const webpackMiddlewares = await Promise.all(
-    webpackConfigs.map(webpackConfig =>
-      koaWebpack({ compiler: webpack(webpackConfig) }),
-    ),
-  );
-
   const nameMiddleware: Middleware = async (ctx, next) => {
     if (ctx.request.host === hostname) {
       await send(ctx, 'src/static/home.html');
@@ -37,7 +25,9 @@ const configureProdMiddlewares = async (hostname: string) => {
     };
   };
 
-  return [health(), ...webpackMiddlewares, nameMiddleware];
+  const renderMiddleware: Middleware = async ctx => {};
+
+  return [health(), nameMiddleware];
 };
 
 export default configureProdMiddlewares;
