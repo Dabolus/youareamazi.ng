@@ -112,14 +112,11 @@ const createWebpackConfig = (
     plugins: [
       new HtmlPlugin({
         inject: 'head',
-        template: path.resolve(
+        template: `html-loader!${path.resolve(
           baseSrcPath,
           `index.${templated ? 'ejs' : 'html'}`,
-        ),
-        filename: path.resolve(
-          baseDistPath,
-          `index.${templated ? 'ejs' : 'html'}`,
-        ),
+        )}`,
+        filename: `index.${templated ? 'ejs' : 'html'}`,
         ...(isDev
           ? {
               showErrors: true,
