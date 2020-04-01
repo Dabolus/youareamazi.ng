@@ -110,6 +110,7 @@ const createWebpackConfig = (
     plugins: [
       new HtmlPlugin({
         inject: 'head',
+        scriptLoading: 'defer',
         template: `html-loader!${path.resolve(
           baseSrcPath,
           `index.${templated ? 'ejs' : 'html'}`,
