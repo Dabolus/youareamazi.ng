@@ -101,6 +101,12 @@ const createWebpackConfig = (
             },
           ],
         },
+        {
+          test: /\.ya?ml$/,
+          exclude: /node_modules/,
+          type: 'json', // Required by Webpack v4
+          use: 'yaml-loader',
+        },
       ],
     },
     plugins: [
