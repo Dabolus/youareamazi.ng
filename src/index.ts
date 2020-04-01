@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import Koa from 'koa';
 import path from 'path';
 import ejs from './middlewares/ejs';
