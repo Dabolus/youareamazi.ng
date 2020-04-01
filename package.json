@@ -17,6 +17,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-typescript": "^7.9.0",
     "@types/copy-webpack-plugin": "^5.0.0",
     "@types/koa": "^2.11.3",
     "@types/koa-ejs": "^4.2.2",
