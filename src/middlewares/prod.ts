@@ -1,12 +1,32 @@
+import path from 'path';
+import Application, { Middleware } from 'koa';
+import logger from 'koa-morgan';
+import compress from 'koa-compress';
 import send from 'koa-send';
-import { Middleware } from 'koa';
+import staticDir from 'koa-static';
 import health from './health';
 import decode from '../helpers/decode';
 
 const configureProdMiddlewares = async (hostname: string) => {
+  const homeMiddleware = staticDir(path.join(__dirname, 'apps/home'));
+  const motivationMiddleware = staticDir(
+    path.join(__dirname, 'apps/motivation'),
+  );
+
+  const staticMiddleware: Middleware = async function(
+    this: Application,
+    ctx,
+    next,
+  ) {
+    if (ctx.request.host === hostname) {
+      return homeMiddleware.call(this, ctx, next);
+    }
+
+    return motivationMiddleware.call(this, ctx, next);
+  };
+
   const nameMiddleware: Middleware = async (ctx, next) => {
     if (ctx.request.host === hostname) {
-      await send(ctx, 'src/static/home.html');
       return;
     }
 
@@ -23,11 +43,26 @@ const configureProdMiddlewares = async (hostname: string) => {
         ),
       ),
     };
+
+    return next();
   };
 
-  const renderMiddleware: Middleware = async ctx => {};
+  const renderMiddleware: Middleware = async ctx => {
+    if (ctx.request.path !== '/' && ctx.request.path !== '/index.ejs') {
+      return;
+    }
 
-  return [health(), nameMiddleware];
+    await ctx.render('index');
+  };
+
+  return [
+    logger('short'),
+    compress(),
+    health(),
+    staticMiddleware,
+    nameMiddleware,
+    renderMiddleware,
+  ];
 };
 
 export default configureProdMiddlewares;
