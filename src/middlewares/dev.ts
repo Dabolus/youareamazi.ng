@@ -1,7 +1,7 @@
 import path from 'path';
 import koaWebpack from 'koa-webpack';
 import webpack, { Compiler } from 'webpack';
-import webpackConfigs from '../../webpack.config.apps';
+import webpackConfigs, { baseLibPath } from '../../webpack.config.apps';
 import { Middleware } from 'koa';
 import health from './health';
 import decode from '../helpers/decode';
@@ -21,17 +21,9 @@ const configureDevMiddlewares = async () => {
       return next();
     }
 
-    const homeFiles = webpackMiddleware.devMiddleware.fileSystem.readdirSync(
-      homeConfig.output!.path!,
-    );
-    const motivationFiles = webpackMiddleware.devMiddleware.fileSystem.readdirSync(
-      motivationConfig.output!.path!,
-    );
+    const filePath = path.resolve(baseLibPath, ctx.request.path.slice(1));
 
-    if (
-      homeFiles.some(file => ctx.request.path.includes(file)) ||
-      motivationFiles.some(file => ctx.request.path.includes(file))
-    ) {
+    if (webpackMiddleware.devMiddleware.fileSystem.existsSync(filePath)) {
       return next();
     }
 

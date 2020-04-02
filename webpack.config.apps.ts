@@ -7,24 +7,26 @@ import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 
 const isDev = process.env.NODE_ENV !== 'production';
+export const baseSrcPath = path.resolve(__dirname, 'src/apps');
+export const baseLibPath = path.resolve(__dirname, 'lib/apps');
 
 const createWebpackConfig = (
   app: string,
   templated: boolean,
 ): Configuration => {
-  const baseSrcPath = path.resolve(__dirname, 'src/apps', app);
-  const baseLibPath = path.resolve(__dirname, 'lib/apps', app);
+  const baseAppSrcPath = path.resolve(baseSrcPath, app);
+  const baseAppLibPath = path.resolve(baseLibPath, app);
 
   return {
     mode: isDev ? 'development' : 'production',
-    context: baseSrcPath,
-    entry: [path.resolve(baseSrcPath, 'index.ts')],
+    context: baseAppSrcPath,
+    entry: [path.resolve(baseAppSrcPath, 'index.ts')],
     resolve: {
       extensions: ['.scss', '.sass', '.css', '.ejs', '.html', '.ts', '.js'],
     },
     output: {
       filename: 'main.js',
-      path: baseLibPath,
+      path: baseAppLibPath,
       pathinfo: false,
       publicPath: `/${app}`,
     },
@@ -117,7 +119,7 @@ const createWebpackConfig = (
         inject: 'head',
         scriptLoading: 'defer',
         template: `html-loader!${path.resolve(
-          baseSrcPath,
+          baseAppSrcPath,
           `index.${templated ? 'ejs' : 'html'}`,
         )}`,
         filename: `index.${templated ? 'ejs' : 'html'}`,
@@ -145,8 +147,8 @@ const createWebpackConfig = (
       }),
       new CopyPlugin([
         {
-          from: path.resolve(baseSrcPath, 'assets'),
-          to: baseLibPath,
+          from: path.resolve(baseAppSrcPath, 'assets'),
+          to: baseAppLibPath,
         },
       ]),
     ],
