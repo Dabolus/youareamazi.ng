@@ -70,7 +70,12 @@ const createWebpackConfig = (
                 hmr: isDev,
               },
             },
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                url: false,
+              },
+            },
             {
               loader: 'postcss-loader',
               options: {
