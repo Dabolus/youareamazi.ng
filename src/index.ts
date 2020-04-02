@@ -12,14 +12,12 @@ const start = () =>
     const port = process.env.PORT || 4416;
     const app = new Koa();
 
-    ejs(
-      app,
-      isDev
-        ? undefined
-        : {
-            root: path.resolve(__dirname, 'apps/motivation'),
-          },
-    );
+    ejs(app, {
+      cache: false,
+      ...(!isDev && {
+        root: path.resolve(__dirname, 'apps/motivation'),
+      }),
+    });
 
     const middlewares = isDev
       ? await configureDevMiddlewares()
