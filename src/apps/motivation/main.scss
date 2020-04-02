@@ -1,0 +1,189 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Product Sans', 'Roboto', 'Noto Sans', sans-serif;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+}
+
+html,
+body,
+main {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #2f4260;
+}
+
+main {
+  &,
+  * {
+    z-index: 10;
+  }
+}
+
+#bg1,
+#bg2,
+#bg3,
+#bg4 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 1000vw;
+  height: 80vh;
+  margin: 0;
+  padding: 0;
+  background-repeat: repeat-x;
+  background-size: auto 80vh;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-900vw);
+  }
+}
+
+#bg4 {
+  background-image: url('images/landscape_0003_4_mountain.png');
+  z-index: 1;
+  animation: 1280s scroll infinite linear;
+}
+
+#bg3 {
+  background-image: url('images/landscape_0002_3_trees.png');
+  z-index: 2;
+  animation: 1080s scroll infinite linear;
+}
+
+#bg2 {
+  background-image: url('images/landscape_0001_2_trees.png');
+  z-index: 3;
+  animation: 880s scroll infinite linear;
+}
+
+#bg1 {
+  background-image: url('images/landscape_0000_1_trees.png');
+  z-index: 4;
+  animation: 780s scroll infinite linear;
+}
+
+#clouds {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1000vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  opacity: 0.25;
+  background-size: auto 100vh;
+  background: url('images/landscape_0004_5_clouds.png') repeat-x;
+  z-index: 0;
+  animation: 2048s scroll infinite linear reverse;
+  filter: blur(8px);
+}
+
+#shout,
+#cit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#shout {
+  height: 40vh;
+}
+
+#cit {
+  height: 60vh;
+}
+
+#cit > div,
+#shout > div {
+  width: 100%;
+  padding: 48px;
+}
+
+#text {
+  font-family: 'Roboto', 'Noto', sans-serif;
+  font-size: 4vw;
+}
+
+#author {
+  font-family: 'Homemade Apple', serif;
+  font-style: italic;
+  font-size: 3vw;
+}
+
+body {
+  transition: filter 5s;
+
+  &.loading {
+    filter: blur(48px) brightness(1000%) grayscale(100%);
+  }
+}
+
+body.loading #name,
+body.loading #amazing,
+.hidden {
+  opacity: 0;
+}
+
+#name,
+#amazing,
+#text,
+#author {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#name,
+#amazing {
+  -webkit-transition: opacity 2s;
+  -moz-transition: opacity 2s;
+  -ms-transition: opacity 2s;
+  -o-transition: opacity 2s;
+  transition: opacity 2s;
+}
+
+#text,
+#author {
+  padding: 1rem 0 !important;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -ms-transition: opacity 1s;
+  -o-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+#name {
+  -webkit-transition-delay: 5s;
+  -moz-transition-delay: 5s;
+  -ms-transition-delay: 5s;
+  -o-transition-delay: 5s;
+  transition-delay: 5s;
+}
+
+#amazing {
+  font-size: 7vw;
+  -webkit-transition-delay: 7s;
+  -moz-transition-delay: 7s;
+  -ms-transition-delay: 7s;
+  -o-transition-delay: 7s;
+  transition-delay: 7s;
+}
+
+#copyright {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1vw;
+  position: fixed;
+  bottom: 2vh;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  z-index: 100;
+}
