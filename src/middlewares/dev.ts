@@ -1,4 +1,5 @@
 import path from 'path';
+import logger from 'koa-morgan';
 import koaWebpack from 'koa-webpack';
 import webpack, { Compiler } from 'webpack';
 import webpackConfigs, { baseLibPath } from '../../webpack.config.apps';
@@ -70,7 +71,13 @@ const configureDevMiddlewares = async () => {
     await ctx.render(template);
   };
 
-  return [health(), webpackMiddleware, nameMiddleware, renderMiddleware];
+  return [
+    logger('dev'),
+    health(),
+    webpackMiddleware,
+    nameMiddleware,
+    renderMiddleware,
+  ];
 };
 
 export default configureDevMiddlewares;
