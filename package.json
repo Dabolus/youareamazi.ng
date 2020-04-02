@@ -4,9 +4,10 @@
   "repository": "git@github.com:Dabolus/youareamazi.ng.git",
   "author": "Giorgio Garasto <giorgio@garasto.it>",
   "license": "MIT",
+  "main": "lib/server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development ts-node-dev --respawn --transpileOnly src/index.ts",
-    "serve": "node lib/src/index.js",
+    "serve": "node lib/server.js",
     "build": "run-p build:server build:apps",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.ts",
     "build:apps": "cross-env NODE_ENV=production webpack --config webpack.config.apps.ts"
