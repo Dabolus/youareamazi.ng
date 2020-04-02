@@ -31,6 +31,11 @@ const redirect = () => {
 
 const start = () => {
   name.addEventListener('keydown', event => {
+    if (event.key === '.') {
+      event.preventDefault();
+      return;
+    }
+
     if (event.key === 'Enter') {
       redirect();
     }
