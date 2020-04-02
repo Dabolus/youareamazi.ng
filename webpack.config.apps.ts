@@ -28,7 +28,7 @@ const createWebpackConfig = (
       filename: 'main.js',
       path: baseAppLibPath,
       pathinfo: false,
-      publicPath: `/${app}`,
+      publicPath: isDev ? `/${app}` : '/',
     },
     optimization: isDev
       ? {
