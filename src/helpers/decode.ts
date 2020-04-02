@@ -2,7 +2,7 @@ import { decode as decodeFromPunycode } from 'punycode';
 
 const decode = (encoded: string) =>
   encoded
-    .split('.')
+    .split('_')
     .map(word => {
       let decodedWord = word;
 

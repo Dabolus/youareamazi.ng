@@ -10,7 +10,7 @@ const encode = (pretty: string) =>
     .replace(/\s+/g, ' ')
     .split(' ')
     .map(word => encodeToPunycode(word.toLowerCase()))
-    .join('.');
+    .join('_');
 
 const redirect = () => {
   if (name.value) {
@@ -18,7 +18,7 @@ const redirect = () => {
     setTimeout(() => {
       /* EXAMPLE RESULT */
       // Input value:          Foo Bar
-      // RESULT:               https://foo.bar.youareamazi.ng
+      // RESULT:               https://foo_bar.youareamazi.ng
       window.location.href = `https://${encode(name.value)}.youareamazi.ng`;
     }, 2000);
   } else {

@@ -34,7 +34,7 @@ const configureProdMiddlewares = async (hostname: string) => {
       ...ctx.state,
       /* EXAMPLE RESULT */
       // Our hostname:         example.com
-      // Request's hostname:   foo.bar.example.com
+      // Request's hostname:   foo_bar.example.com
       // RESULT:               name = 'Foo Bar'
       name: decode(
         ctx.request.host.slice(

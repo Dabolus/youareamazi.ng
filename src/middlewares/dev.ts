@@ -31,7 +31,7 @@ const configureDevMiddlewares = async () => {
     ctx.state = {
       ...ctx.state,
       /* EXAMPLE RESULT */
-      // Request path:         /motivation/foo.bar
+      // Request path:         /motivation/foo_bar
       // RESULT:               name = 'Foo Bar'
       name: decode(ctx.request.path.slice(12)),
     };
