@@ -106,7 +106,7 @@ const configureEJSMiddleware = (
         content,
       };
     } catch (error) {
-      if (error.code !== 'ENOENT') {
+      if (error.code !== 'ENOENT' && error.code !== 'ENAMETOOLONG') {
         throw error;
       }
 
