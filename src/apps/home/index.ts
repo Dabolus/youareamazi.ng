@@ -4,16 +4,33 @@ import { encode as encodeToPunycode } from 'punycode';
 
 const name = document.querySelector<HTMLInputElement>('#name');
 
-const encode = (pretty: string) =>
-  pretty
+const VALID_ASCII_REGEX = /^[a-z0-9 \-]+$/i;
+
+const isValid = (str: string) => {
+  const arr = str.split('');
+  return arr.every(
+    char => VALID_ASCII_REGEX.test(char) || char.charCodeAt(0) > 127,
+  );
+};
+
+const encode = (pretty: string) => {
+  const normalized = pretty
+    // Remove leading and trailing whitespaces
     .trim()
-    .replace(/\s+/g, ' ')
-    .split(' ')
-    .map(word => encodeToPunycode(word.toLowerCase()))
-    .join('_');
+    // Replace whitespaces with dashes and remove the extra ones
+    .replace(/\s+/g, '-')
+    // Make it all lower case
+    .toLowerCase();
+
+  // If the string is only ASCII we return it as it is
+  // Otherwise, we need to encode it using punycode and make it an IDN
+  return VALID_ASCII_REGEX.test(normalized)
+    ? normalized
+    : `xn--${encodeToPunycode(normalized)}`;
+};
 
 const redirect = () => {
-  if (name.value) {
+  if (name.value && isValid(name.value)) {
     document.body.className = 'loading';
     setTimeout(() => {
       /* EXAMPLE RESULT */
@@ -31,12 +48,13 @@ const redirect = () => {
 
 const start = () => {
   name.addEventListener('keydown', event => {
-    if (event.key === '.') {
+    if (!isValid(event.key)) {
       event.preventDefault();
       return;
     }
 
     if (event.key === 'Enter') {
+      event.preventDefault();
       redirect();
     }
   });
