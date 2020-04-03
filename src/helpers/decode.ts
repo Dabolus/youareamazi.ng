@@ -6,9 +6,11 @@ const decode = (encoded: string) =>
     .map(word => {
       let decodedWord = word;
 
-      try {
-        decodedWord = decodeFromPunycode(word);
-      } catch {}
+      if (decodedWord.startsWith('xn--')) {
+        try {
+          decodedWord = decodeFromPunycode(word.slice(4));
+        } catch {}
+      }
 
       return decodedWord.charAt(0).toUpperCase() + decodedWord.slice(1);
     })
