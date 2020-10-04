@@ -5,6 +5,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import { InjectManifest as InjectManifestPlugin } from 'workbox-webpack-plugin';
 
 const isDev = process.env.NODE_ENV !== 'production';
 export const baseSrcPath = path.resolve(__dirname, 'src/apps');
@@ -157,6 +158,20 @@ const createWebpackConfig = (
           },
         ],
       }),
+      ...(isDev
+        ? []
+        : [
+            new InjectManifestPlugin({
+              swSrc: path.resolve(baseAppSrcPath, 'sw.ts'),
+              swDest: './sw.js',
+              exclude: [
+                /images\/icons/,
+                /\.LICENSE$/,
+                /\.map$/,
+                /(?:^|\/)\..+$/,
+              ],
+            }),
+          ]),
     ],
   };
 };

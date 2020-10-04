@@ -8,7 +8,8 @@
     "resolveJsonModule": true,
     "lib": [
       "esnext",
-      "dom"
+      "dom",
+      "webworker"
     ],
     "strict": true
   },

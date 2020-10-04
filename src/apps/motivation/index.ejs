@@ -32,6 +32,12 @@
     <meta property="og:image:height" content="630" />
 
     <title><%= name %>, you are amazing</title>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
   </head>
   <body class="loading">
     <div id="bg1"></div>
