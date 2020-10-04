@@ -171,16 +171,12 @@ const createWebpackConfig = (
                 /(?:^|\/)\..+$/,
               ],
               manifestTransforms: [
-                (originalManifest) => {
-                  console.log(originalManifest);
-
-                  return {
-                    manifest: originalManifest.map(({ url, ...rest }) => ({
-                      url: url.replace('ejs', 'html'),
-                      ...rest,
-                    })),
-                  };
-                },
+                (originalManifest) => ({
+                  manifest: originalManifest.map(({ url, ...rest }) => ({
+                    url: url.replace('ejs', 'html'),
+                    ...rest,
+                  })),
+                }),
               ],
             }),
           ]),
