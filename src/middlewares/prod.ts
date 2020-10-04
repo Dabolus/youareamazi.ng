@@ -48,7 +48,11 @@ const configureProdMiddlewares = async (hostname: string) => {
   };
 
   const renderMiddleware: Middleware = async (ctx) => {
-    if (ctx.request.path !== '/' && ctx.request.path !== '/index.ejs') {
+    if (
+      ctx.request.path !== '/' &&
+      ctx.request.path !== '/index.html' &&
+      ctx.request.path !== '/index.ejs'
+    ) {
       return;
     }
 
