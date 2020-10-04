@@ -9,7 +9,7 @@ const VALID_ASCII_REGEX = /^[a-z0-9 \-]+$/i;
 const isValid = (str: string) => {
   const arr = str.split('');
   return arr.every(
-    char => VALID_ASCII_REGEX.test(char) || char.charCodeAt(0) > 127,
+    (char) => VALID_ASCII_REGEX.test(char) || char.charCodeAt(0) > 127,
   );
 };
 
@@ -47,7 +47,7 @@ const redirect = () => {
 };
 
 const start = () => {
-  name.addEventListener('keydown', event => {
+  name.addEventListener('keydown', (event) => {
     if (!isValid(event.key)) {
       event.preventDefault();
       return;
@@ -63,7 +63,7 @@ const start = () => {
 
 WebFont.load({
   google: {
-    families: ['Product Sans'],
+    families: ['Google Sans:bold'],
   },
   active: start,
 });

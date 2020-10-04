@@ -46,7 +46,7 @@ const start = () => {
 
 WebFont.load({
   google: {
-    families: ['Product Sans', 'Roboto', 'Homemade Apple'],
+    families: ['Google Sans:bold', 'Roboto', 'Homemade Apple'],
   },
   active: () => {
     fontsReady = true;
