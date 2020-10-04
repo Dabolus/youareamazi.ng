@@ -2,9 +2,9 @@ import path from 'path';
 import Application, { Middleware } from 'koa';
 import logger from 'koa-morgan';
 import compress from 'koa-compress';
-import send from 'koa-send';
 import staticDir from 'koa-static';
 import health from './health';
+import icons from './icons';
 import decode from '../helpers/decode';
 
 const configureProdMiddlewares = async (hostname: string) => {
@@ -13,7 +13,7 @@ const configureProdMiddlewares = async (hostname: string) => {
     path.join(__dirname, 'apps/motivation'),
   );
 
-  const staticMiddleware: Middleware = async function(
+  const staticMiddleware: Middleware = async function (
     this: Application,
     ctx,
     next,
@@ -47,7 +47,7 @@ const configureProdMiddlewares = async (hostname: string) => {
     return next();
   };
 
-  const renderMiddleware: Middleware = async ctx => {
+  const renderMiddleware: Middleware = async (ctx) => {
     if (ctx.request.path !== '/' && ctx.request.path !== '/index.ejs') {
       return;
     }
@@ -61,6 +61,7 @@ const configureProdMiddlewares = async (hostname: string) => {
     health(),
     staticMiddleware,
     nameMiddleware,
+    icons(),
     renderMiddleware,
   ];
 };

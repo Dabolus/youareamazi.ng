@@ -2,6 +2,7 @@ import { Configuration, BannerPlugin, DefinePlugin } from 'webpack';
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -58,6 +59,16 @@ const config: Configuration = {
     new DefinePlugin({
       'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
     }),
+    new CopyPlugin([
+      {
+        from: path.resolve(baseSrcPath, 'templates'),
+        to: path.resolve(baseLibPath, 'templates'),
+      },
+      {
+        from: path.resolve(baseSrcPath, 'fonts'),
+        to: path.resolve(baseLibPath, 'fonts'),
+      },
+    ]),
   ],
   externals: [
     nodeExternals({
