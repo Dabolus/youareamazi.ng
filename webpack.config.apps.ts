@@ -81,19 +81,23 @@ const createWebpackConfig = (
             {
               loader: 'postcss-loader',
               options: {
-                ident: 'postcss',
-                plugins: () => [
-                  require('postcss-preset-env')(),
-                  require('autoprefixer')(),
-                  require('cssnano')({
-                    preset: [
-                      'advanced',
+                postcssOptions: {
+                  plugins: [
+                    'postcss-preset-env',
+                    'autoprefixer',
+                    [
+                      'cssnano',
                       {
-                        autoprefixer: false,
+                        preset: [
+                          'advanced',
+                          {
+                            autoprefixer: false,
+                          },
+                        ],
                       },
                     ],
-                  }),
-                ],
+                  ],
+                },
               },
             },
             {
@@ -145,12 +149,14 @@ const createWebpackConfig = (
       new MiniCssExtractPlugin({
         filename: 'main.css',
       }),
-      new CopyPlugin([
-        {
-          from: path.resolve(baseAppSrcPath, 'assets'),
-          to: baseAppLibPath,
-        },
-      ]),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(baseAppSrcPath, 'assets'),
+            to: baseAppLibPath,
+          },
+        ],
+      }),
     ],
   };
 };

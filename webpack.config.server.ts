@@ -59,16 +59,18 @@ const config: Configuration = {
     new DefinePlugin({
       'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
     }),
-    new CopyPlugin([
-      {
-        from: path.resolve(baseSrcPath, 'templates'),
-        to: path.resolve(baseLibPath, 'templates'),
-      },
-      {
-        from: path.resolve(baseSrcPath, 'fonts'),
-        to: path.resolve(baseLibPath, 'fonts'),
-      },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(baseSrcPath, 'templates'),
+          to: path.resolve(baseLibPath, 'templates'),
+        },
+        {
+          from: path.resolve(baseSrcPath, 'fonts'),
+          to: path.resolve(baseLibPath, 'fonts'),
+        },
+      ],
+    }),
   ],
   externals: [
     nodeExternals({
