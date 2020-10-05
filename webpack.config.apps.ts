@@ -156,6 +156,14 @@ const createWebpackConfig = (
             from: path.resolve(baseAppSrcPath, 'assets'),
             to: baseAppLibPath,
           },
+          ...(templated
+            ? [
+                {
+                  from: path.resolve(baseAppSrcPath, '**/*.ejs'),
+                  to: baseAppLibPath,
+                },
+              ]
+            : []),
         ],
       }),
       ...(isDev

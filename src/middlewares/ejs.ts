@@ -23,6 +23,8 @@ export interface EJSMiddlewareSettings {
   debug?: boolean;
   /** Character to use with angle brackets for open / close (default %). */
   delimiter?: string;
+  /** View output type */
+  type?: string | ((template: string) => string);
 }
 
 const defaultSettings: Omit<EJSMiddlewareSettings, 'root'> = {
@@ -57,7 +59,7 @@ const configureEJSMiddleware = (
   };
 
   // override `ejs` node_module `resolveInclude` function
-  ejs.resolveInclude = function(
+  ejs.resolveInclude = function (
     name: string,
     filename: string,
     isDir?: boolean,
@@ -144,7 +146,7 @@ const configureEJSMiddleware = (
     return render.call(options.scope, options);
   }
 
-  app.context.render = async function(view: string, _context: any) {
+  app.context.render = async function (view: string, _context: any) {
     const ctx = this;
 
     const context = {
@@ -169,7 +171,10 @@ const configureEJSMiddleware = (
 
     if (writeResp) {
       // normal operation
-      ctx.type = 'html';
+      ctx.type =
+        typeof settings.type === 'function'
+          ? settings.type(view)
+          : settings.type || 'html';
       ctx.body = html;
     } else {
       // only return the html

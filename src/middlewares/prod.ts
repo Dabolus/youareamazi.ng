@@ -30,33 +30,34 @@ const configureProdMiddlewares = async (hostname: string) => {
       return;
     }
 
+    const encodedName = ctx.request.host.slice(
+      0,
+      ctx.request.host.length - hostname.length - 1,
+    );
+
     ctx.state = {
       ...ctx.state,
       /* EXAMPLE RESULT */
       // Our hostname:         example.com
       // Request's hostname:   foo_bar.example.com
       // RESULT:               name = 'Foo Bar'
-      name: decode(
-        ctx.request.host.slice(
-          0,
-          ctx.request.host.length - hostname.length - 1,
-        ),
-      ),
+      name: decode(encodedName),
+      encodedName,
     };
 
     return next();
   };
 
   const renderMiddleware: Middleware = async (ctx) => {
-    if (
-      ctx.request.path !== '/' &&
-      ctx.request.path !== '/index.html' &&
-      ctx.request.path !== '/index.ejs'
-    ) {
-      return;
-    }
+    const [, path] = ctx.request.path.split('/');
 
-    await ctx.render('index');
+    if (!path || path.startsWith('index')) {
+      await ctx.render('index');
+    } else if (path.startsWith('sitemap')) {
+      await ctx.render('sitemap');
+    } else if (path.startsWith('robots')) {
+      await ctx.render('robots');
+    }
   };
 
   return [
