@@ -1,0 +1,21 @@
+{
+  "name": "youareamazi.ng-apps",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Dabolus/youareamazi.ng.git",
+  "author": "Giorgio Garasto <giorgio@garasto.me>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "for i in src/*; do cd $i; vite build --config ../../vite.config.ts --emptyOutDir; cd ../..; done"
+  },
+  "dependencies": {
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "@rollup/plugin-yaml": "^3.1.0",
+    "@types/webfontloader": "^1.6.34",
+    "sass": "^1.49.0",
+    "vite": "^2.7.13"
+  }
+}

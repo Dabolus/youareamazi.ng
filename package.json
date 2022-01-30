@@ -1,0 +1,25 @@
+{
+  "name": "youareamazi.ng",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Dabolus/youareamazi.ng.git",
+  "author": "Giorgio Garasto <giorgio@garasto.me>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:apps": "yarn workspace youareamazi.ng-apps build",
+    "predeploy": "yarn build:apps",
+    "deploy": "SLS_DEBUG=* serverless deploy"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.12",
+    "serverless": "^2.72.1",
+    "serverless-domain-manager": "^5.4.1",
+    "serverless-esbuild": "^1.23.3",
+    "serverless-s3-sync": "^1.17.3"
+  },
+  "workspaces": [
+    "functions",
+    "apps"
+  ]
+}

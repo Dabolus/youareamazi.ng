@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="Giorgio Garasto (Dabolus)" name="author">
+    <meta content="Giorgio Garasto (Dabolus)" name="copyright">
+    <meta content="A website to celebrate your amazingness, <%= name %>." name="description">
+    <meta content="<%= name %>,you,are,amazing,awesome,motivation,motivational,phrases" name="keywords">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="194x194" href="/images/icons/favicon-194x194.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/images/icons/site.webmanifest">
+    <link rel="mask-icon" href="/images/icons/safari-pinned-tab.svg" color="#2f4260">
+    <link rel="shortcut icon" href="/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="<%= name %>, you are amazing">
+    <meta name="application-name" content="<%= name %>, you are amazing">
+    <meta name="msapplication-TileColor" content="#2f4260">
+    <meta name="msapplication-config" content="/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#2f4260">
+
+    <meta property="og:title" content="<%= name %>, you are amazing" />
+    <meta property="og:image" content="/images/icons/opengraph.png" />
+    <meta property="og:image:alt" content="<%= name %>, you are amazing" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <title><%= name %>, you are amazing</title>
+
+    <script>
+      // TODO: re-enable this when service worker generation is re-implemented
+      // if ('serviceWorker' in navigator) {
+      //   navigator.serviceWorker.register('/sw.js');
+      // }
+    </script>
+
+    <% buildOutput.forEach(({ tag, ...attributes }) => { %>
+      <<%- tag %> <%- Object
+        .entries(attributes)
+        .map(([key, val]) => `${key}="${val}"`)
+        .join(' ') %><%- tag === 'script' ? ' crossorigin></script>' : '>' %>
+    <% }) %>
+  </head>
+  <body class="loading">
+    <div id="bg1"></div>
+    <div id="bg2"></div>
+    <div id="bg3"></div>
+    <div id="bg4"></div>
+    <div id="clouds"></div>
+    <main>
+      <div id="shout">
+        <div>
+          <h1 id="name"><%= name %></h1>
+          <h2 id="amazing">you are amazing</h2>
+        </div>
+      </div>
+      <div id="cit">
+        <div>
+          <div id="text" class="hidden"></div>
+          <div id="author" class="hidden"></div>
+        </div>
+      </div>
+      <span id="copyright">Brought to you with <b>&#x2764;</b> by <a href="https://giorgio.garasto.me" target="dabolus-website">Dabolus</a></span>
+    </main>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-86330876-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-86330876-6', {
+        'page_title': '<%= name %>',
+        'page_location': 'https://youareamazi.ng/<%= name %>',
+        'page_path': '/<%= name %>'
+      });
+    </script>
+  </body>
+</html>
