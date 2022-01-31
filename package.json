@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "build:apps": "yarn workspace youareamazi.ng-apps build",
-    "predeploy": "yarn build:apps",
+    "build:layers": "for i in layers/*; do cd $i; rm -rf build; ./build.sh; cd ../..; done",
+    "predeploy": "yarn build:apps && yarn build:layers",
     "deploy": "SLS_DEBUG=* serverless deploy"
   },
   "devDependencies": {
