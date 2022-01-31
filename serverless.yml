@@ -56,13 +56,7 @@ functions:
       BUILD_OUTPUT: ${file(./scripts/get-build-outputs.js):ejs-renderer}
     events:
       - httpApi:
-          path: /
-          method: get
-      - httpApi:
-          path: /sitemap.xml
-          method: get
-      - httpApi:
-          path: /robots.txt
+          path: /{file}
           method: get
 
 resources:

@@ -7,24 +7,41 @@ const pathToTemplateData: Record<
   string,
   { templateName: string; contentType: string }
 > = {
-  '/': {
+  'index.html': {
     templateName: 'index',
     contentType: 'text/html',
   },
-  '/sitemap.xml': {
+  'sitemap.xml': {
     templateName: 'sitemap',
     contentType: 'application/xml',
   },
-  '/robots.txt': {
+  'robots.txt': {
     templateName: 'robots',
     contentType: 'text/plain',
+  },
+  'site.webmanifest': {
+    templateName: 'site.webmanifest',
+    contentType: 'application/manifest+json',
+  },
+  'browserconfig.xml': {
+    templateName: 'browserconfig',
+    contentType: 'application/xml',
   },
 };
 
 export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  const { templateName, contentType } = pathToTemplateData[event.rawPath];
+  const config = pathToTemplateData[event.pathParameters?.file || 'index.html'];
+
+  if (!config) {
+    return {
+      statusCode: 404,
+      body: 'Not found',
+    };
+  }
+
+  const { templateName, contentType } = config;
   const buildOutput: Record<string, string>[] = JSON.parse(
     process.env.BUILD_OUTPUT!,
   );
