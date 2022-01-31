@@ -29,6 +29,7 @@ custom:
     packager: yarn
     exclude:
       - aws-sdk
+      - canvas
   s3Sync:
     - bucketName: youareamazi-ng-static
       localDir: static
@@ -45,7 +46,12 @@ custom:
 package:
   individually: true
   patterns:
+    - 'functions/src/assets/**'
     - 'functions/src/templates/**'
+
+layers:
+  canvas:
+    path: layers/canvas/build
 
 functions:
   ejs-renderer:
@@ -58,6 +64,18 @@ functions:
       - httpApi:
           path: /{file}
           method: get
+  image-renderer:
+    handler: functions/src/image-renderer.handler
+    memorySize: 1536
+    timeout: 20
+    environment:
+      LD_PRELOAD: /opt/nodejs/node_modules/canvas/build/Release/libz.so.1
+    events:
+      - httpApi:
+          path: /images/icons/{image}
+          method: get
+    layers:
+      - { Ref: CanvasLambdaLayer }
 
 resources:
   Resources:
