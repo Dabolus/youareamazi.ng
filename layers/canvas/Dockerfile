@@ -3,7 +3,7 @@ FROM amazonlinux:latest
 # set up container
 RUN yum -y update \
   && yum -y groupinstall "Development Tools" \
-  && curl --silent --location https://rpm.nodesource.com/setup_14.x | bash - \
+  && curl --silent --location https://rpm.nodesource.com/setup_16.x | bash - \
   && yum install -y nodejs gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel librsvg2-devel pango-devel bzip2-devel
 
 # will be created and become working dir
