@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "for i in src/*; do cd $i; vite build --config ../../vite.config.ts --emptyOutDir; cd ../..; done"
+    "build": "./scripts/build.sh"
   },
   "dependencies": {
     "canvas": "^2.10.1",
