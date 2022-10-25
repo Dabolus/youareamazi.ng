@@ -1,10 +1,14 @@
 FROM amazonlinux:latest
 
 # set up container
-RUN yum -y update \
+RUN amazon-linux-extras enable python3.8 \
+  && yum -y update \
   && yum -y groupinstall "Development Tools" \
   && curl --silent --location https://rpm.nodesource.com/setup_16.x | bash - \
-  && yum install -y nodejs gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel librsvg2-devel pango-devel bzip2-devel
+  && yum install -y python3.8 nodejs gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel librsvg2-devel pango-devel bzip2-devel
+
+# set python 3 as default python version
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
 
 # will be created and become working dir
 WORKDIR /root/layer/nodejs
