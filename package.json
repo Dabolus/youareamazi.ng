@@ -6,22 +6,23 @@
   "author": "Giorgio Garasto <giorgio@garasto.me>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build:apps": "yarn workspace youareamazi.ng-apps build",
+    "build:apps": "cd apps && bun run build",
     "build:layers": "./scripts/build-layers.sh",
-    "predeploy": "yarn build:apps && yarn build:layers",
-    "deploy": "SLS_DEBUG=* serverless deploy"
+    "build": "bun run build:apps && bun run build:layers",
+    "deploy": "serverless deploy",
+    "upgrade-interactive": "ncu --interactive --deep"
   },
   "devDependencies": {
-    "esbuild": "^0.19.5",
-    "serverless": "^3.36.0",
-    "serverless-domain-manager": "^7.1.2",
-    "serverless-esbuild": "^1.48.5",
-    "serverless-s3-sync": "^3.2.0"
+    "esbuild": "^0.28.0",
+    "npm-check-updates": "^22.0.1",
+    "serverless": "^4.34.0",
+    "serverless-domain-manager": "^10.1.0",
+    "serverless-s3-sync": "^3.5.1"
   },
   "workspaces": [
     "functions",
     "apps"
-  ],
-  "packageManager": "yarn@3.2.4"
+  ]
 }

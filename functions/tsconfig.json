@@ -4,15 +4,15 @@
     "useDefineForClassFields": true,
     "module": "CommonJS",
     "lib": ["ESNext"],
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "types": ["aws-lambda", "ejs", "node", "punycode", "text-to-svg"]
   },
   "include": ["./src"]
 }

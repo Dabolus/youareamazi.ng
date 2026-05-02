@@ -1,8 +1,8 @@
 import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import { registerFont, createCanvas, loadImage } from 'canvas';
+import { FontLibrary, Canvas, loadImage } from 'skia-canvas';
 import TextToSvg from 'text-to-svg';
 import pngToIco from 'png-to-ico';
-import path from 'path';
+import path from 'node:path';
 import { decode } from './helpers/utils';
 
 const fontPath = path.join(
@@ -12,10 +12,7 @@ const fontPath = path.join(
   'google-sans-bold.ttf',
 );
 
-registerFont(fontPath, {
-  family: 'Google Sans',
-  weight: 'bold',
-});
+FontLibrary.use('Google Sans', fontPath);
 
 const textToSvg = TextToSvg.loadSync(fontPath);
 
@@ -158,7 +155,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
       body: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="${namePath} ${youAreAmazingPath}"/></svg>`,
     };
   } else {
-    const canvas = createCanvas(width, height);
+    const canvas = new Canvas(width, height);
     const context = canvas.getContext('2d');
 
     if (backgroundTemplateName) {
@@ -179,7 +176,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
     context.textBaseline = 'top';
     context.fillText('you are amazing', width / 2, height / 2);
 
-    const png = canvas.toBuffer('image/png');
+    const png = await canvas.toBuffer('png');
 
     if (type !== 'x-icon') {
       return {

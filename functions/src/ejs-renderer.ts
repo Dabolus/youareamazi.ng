@@ -1,6 +1,6 @@
 import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import path from 'path';
-import { renderFile } from 'ejs';
+import path from 'node:path';
+import ejs from 'ejs';
 import { decode } from './helpers/utils';
 
 const pathToTemplateData: Record<
@@ -46,7 +46,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
     process.env.BUILD_OUTPUT!,
   );
 
-  const rendered = await renderFile(
+  const rendered = await ejs.renderFile(
     path.join(__dirname, 'templates', 'ejs', `${templateName}.ejs`),
     {
       name: decode(event.requestContext.domainPrefix),

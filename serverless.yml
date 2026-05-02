@@ -1,12 +1,11 @@
 org: dabolus
 app: youareamazi-ng
 service: youareamazi-ng
-frameworkVersion: '3'
 useDotenv: true
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs24.x
   region: us-east-1
   memorySize: 768
   timeout: 10
@@ -15,19 +14,10 @@ provider:
     STATIC_ASSETS_BASE_URL: https://youareamazi-ng-static.s3.amazonaws.com
 
 plugins:
-  - serverless-esbuild
   - serverless-s3-sync
   - serverless-domain-manager
 
 custom:
-  esbuild:
-    bundle: true
-    minify: false
-    sourcemap: true
-    packager: yarn
-    exclude:
-      - aws-sdk
-      - canvas
   s3Sync:
     - bucketName: youareamazi-ng-static
       localDir: static
@@ -40,6 +30,20 @@ custom:
         securityPolicy: tls_1_2
         apiType: http
         autoDomain: true
+
+build:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    format: esm
+    outExtension:
+      .js: .mjs
+    platform: node
+    target: node24
+    inject: ['cjs-shim.ts']
+    resolveExtensions: ['.ts', '.mjs', '.js', '.json']
+    external: ['@aws-sdk/*', 'skia-canvas']
 
 package:
   individually: true
@@ -57,7 +61,7 @@ functions:
     memorySize: 1536
     timeout: 20
     environment:
-      BUILD_OUTPUT: ${file(./scripts/get-build-outputs.js):ejs-renderer}
+      BUILD_OUTPUT: ${file(./scripts/get-build-outputs.cjs):ejs-renderer}
     events:
       - httpApi:
           path: /{file}

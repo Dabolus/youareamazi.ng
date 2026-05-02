@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import path from 'path';
+import path from 'node:path';
 import yaml from '@rollup/plugin-yaml';
 
 const app = path.basename(process.cwd());
