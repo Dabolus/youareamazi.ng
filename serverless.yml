@@ -52,8 +52,12 @@ package:
     - 'functions/src/templates/**'
 
 layers:
-  canvas:
-    path: layers/canvas/build
+  skiaCanvas:
+    path: layers/skia-canvas/build
+    compatibleRuntimes:
+      - nodejs24.x
+    compatibleArchitectures:
+      - x86_64
 
 functions:
   ejs-renderer:
@@ -70,14 +74,12 @@ functions:
     handler: functions/src/image-renderer.handler
     memorySize: 1536
     timeout: 20
-    environment:
-      LD_PRELOAD: /opt/nodejs/node_modules/canvas/build/Release/libz.so.1
     events:
       - httpApi:
           path: /images/icons/{image}
           method: get
     layers:
-      - { Ref: CanvasLambdaLayer }
+      - { Ref: SkiaCanvasLambdaLayer }
 
 resources:
   Resources:
